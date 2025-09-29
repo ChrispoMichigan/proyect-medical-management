@@ -159,12 +159,15 @@ def createPatient():
     return jsonify({"status": True})
 '''
 #* Estructura de mandado al /api/getNextPatient
-data: {
-    patient: {
-        id  : int
-        name: string
-        edad: int
+{
+  "data": {
+    "patient": {
+        "id"        : 1
+        "name"      : "Juan",
+        "edad"      : 65,
+        "department": "general"
     }
+  }
 }
 '''
 @app.route('/api/getNextPatient', methods=['GET'])
