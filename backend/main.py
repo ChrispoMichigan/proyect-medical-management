@@ -68,10 +68,11 @@ class Queue:
 '''
 id_counter = 0
 class Patient:
-    def __init__(self, name: str, age:int):
+    def __init__(self, name: str, age:int, department:str):
         global id_counter
         id_counter += 1
         self.id = id_counter
+        self.department = department
         self.name = name
         self.age = age
         self.admission = datetime.now()
@@ -142,8 +143,8 @@ class Department:
 #* Estructura de llegada al /api/createPatient
 data: {
     patient: {
-        name : string
-        edad : int
+        name: string
+        edad: int
     }
     department : string
 }
@@ -154,8 +155,20 @@ def createPatient():
     print(data)
     print(type(data))
     return jsonify({"status": True})
-
-
+'''
+#* Estructura de mandado al /api/getNextPatient
+data: {
+    patient: {
+        id  : int
+        name: string
+        edad: int
+    }
+}
+'''
+@app.route('/api/getNextPatient', methods=['GET'])
+def getNextPatient():
+    # Tu lógica de negocio aquí
+    return jsonify({"message": "Datos del backend", "status": "success"})
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
