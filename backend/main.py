@@ -117,6 +117,7 @@ class Department:
 #TODO - Pacientes graves, monitoreo constante.
 
 '''
+urgencia = Department('urgencia')
 
 '''
 #* Cola: Departamentos clínicos generales
@@ -127,6 +128,7 @@ class Department:
 #TODO - Cuidado especializado para adultos mayores.
 
 '''
+general = Department('general')
 
 '''
 #* Cola: Departamentos de diagnóstico
@@ -137,7 +139,7 @@ class Department:
 #TODO - Análisis de sangre, orina, etc.
 
 '''
-
+diagnostico = Department('diagnostico')
 
 '''
 #* Estructura de llegada al /api/createPatient
