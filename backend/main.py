@@ -75,7 +75,7 @@ class Patient:
         self.department = department
         self.name = name
         self.age = age
-        self.admission = datetime.now()
+        self.admission = None
         self.egress = None
         self.waiting_time = None
 
@@ -141,19 +141,21 @@ class Department:
 
 '''
 #* Estructura de llegada al /api/createPatient
-data: {
-    patient: {
-        name: string
-        edad: int
+{
+  "data": {
+    "patient": {
+        "name"      : "Juan",
+        "edad"      : 65,
+        "department": "general",
+        "admission" : null | Date
     }
-    department : string
+  }
 }
 '''
 @app.route('/api/createPatient', methods=['POST'])
 def createPatient():
     data = request.json
     print(data)
-    print(type(data))
     return jsonify({"status": True})
 '''
 #* Estructura de mandado al /api/getNextPatient
