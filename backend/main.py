@@ -68,14 +68,14 @@ class Queue:
 '''
 id_counter = 0
 class Patient:
-    def __init__(self, name: str, age:int, department:str):
+    def __init__(self, name: str, age:int, department:str, admission : datetime):
         global id_counter
         id_counter += 1
         self.id = id_counter
         self.department = department
         self.name = name
         self.age = age
-        self.admission = None
+        self.admission = admission
         self.egress = None
         self.waiting_time = None
 
@@ -147,7 +147,7 @@ diagnostico = Department('diagnostico')
   "data": {
     "patient": {
         "name"      : "Juan",
-        "edad"      : 65,
+        "age"       : 65,
         "department": "general",
         "admission" : null | Date
     }
@@ -157,25 +157,66 @@ diagnostico = Department('diagnostico')
 @app.route('/api/createPatient', methods=['POST'])
 def createPatient():
     data = request.json
-    print(data)
-    return jsonify({"status": True})
+    global urgencia
+    global general
+    global diagnostico
+
+    try:
+        department = data['data']['patient']['department']
+        name = data['data']['patient']['name']
+        age = data['data']['patient']['age']
+        admission = data['data']['patient']['admission']
+        if admission is None:
+            admission = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        patient = Patient(
+            name,
+            age,
+            department,
+            admission
+        )
+
+        if department == 'general':
+            general.addPatiend(patient)
+            print(general.cola.queue)
+            return jsonify({"status": True, "message": "Añadido a la cola general"})
+        
+        if department == 'urgencia':
+            urgencia.addPatiend(patient)
+            return jsonify({"status": True, "message": "Añadido a la cola urgencias"})
+        
+        if department == 'diagnostico':
+            diagnostico.addPatiend(patient)
+            return jsonify({"status": True, "message": "Añadido a la cola diagnosticos"}) 
+    except Exception as error:
+        print(str(error))
+        return jsonify({"status": False, "message": f"Error: {str(error)}"})
+       
+    
 '''
 #* Estructura de mandado al /api/getNextPatient
 {
-  "data": {
     "patient": {
         "id"        : 1
         "name"      : "Juan",
         "edad"      : 65,
         "department": "general"
     }
-  }
 }
 '''
 @app.route('/api/getNextPatient', methods=['GET'])
 def getNextPatient():
-    # Tu lógica de negocio aquí
-    return jsonify({"message": "Datos del backend", "status": "success"})
+    # Prueba simulado
+    data = {
+        "patient": {
+            "id"        : 1,
+            "name"      : "Juan",
+            "edad"      : 65,
+            "department": "general",
+            "admission" : datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+    }
+
+    return jsonify({"data": data, "status": True})
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
