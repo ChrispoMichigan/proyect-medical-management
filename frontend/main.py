@@ -863,15 +863,6 @@ tiempo_espera_label.place(x=360, y=620)
 
 ttk.Button(root, text="Generar Reporte de Eficiencia", command=generar_reporte).place(x=20, y=650)
 
-# Búsqueda y gestión
-ttk.Label(root, text="Búsqueda y Gestión", font=("Arial", 12)).place(x=20, y=700)
-
-ttk.Label(root, text="Buscar Paciente:").place(x=20, y=730)
-ttk.Entry(root, textvariable=busqueda_var, width=30).place(x=130, y=730)
-ttk.Button(root, text="Buscar", width=15, command=buscar_paciente).place(x=350, y=730)
-ttk.Button(root, text="Ver Historial", width=15, command=ver_historial).place(x=60, y=770)
-ttk.Button(root, text="Salir", width=15, command=root.quit).place(x=260, y=770)
-
 # Actualizar las vistas después de atender al paciente
 actualizar_vistas_departamentos()
 actualizar_estadisticas()
